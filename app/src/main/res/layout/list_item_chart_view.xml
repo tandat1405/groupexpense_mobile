@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+    <TextView
+        android:id="@+id/tv_chart_owner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Owner name"/>
+    <me.ithebk.barchart.BarChart
+        app:bar_text_color="#000000"
+        app:bar_width="70dp"
+        android:id="@+id/bar_chart"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:bar_type="vertical"
+        app:bar_spaces="10dp"
+        app:bar_show_animation="true">
+    </me.ithebk.barchart.BarChart>
+</LinearLayout>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Acitivity.GroupMemberActivity">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Danh sách thành viên"/>
+        <ListView
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:divider="@null"
+            android:id="@+id/lv_group_member"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></ListView>
+    </LinearLayout>
+    <LinearLayout
+        android:background="#ffffff"
+        android:weightSum="10"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+        <EditText
+            android:layout_weight="6"
+            android:id="@+id/edt_member_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <Button
+            android:layout_weight="4"
+            android:onClick="clickToAddMember"
+            android:background="@drawable/border_list_item_my_group"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Thêm thành viên"/>
+    </LinearLayout>
+
+</RelativeLayout>

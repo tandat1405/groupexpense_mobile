@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    >
+    <TextView
+        android:id="@+id/tv_inviteText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Inviter đã mời bạn tham gia nhóm groupName"/>
+    <LinearLayout
+        android:weightSum="10"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:background="@drawable/border_list_item_my_group"
+            android:id="@+id/btn_accept"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Đồng ý"/>
+        <Button
+            android:background="@drawable/border_list_item_my_group"
+            android:id="@+id/btn_deny"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Từ chối"/>
+    </LinearLayout>
+</LinearLayout>
