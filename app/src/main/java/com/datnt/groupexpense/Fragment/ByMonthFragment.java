@@ -74,7 +74,7 @@ public class ByMonthFragment extends Fragment {
                             expenseResultList = response.body();
                             ChartAdapter ca = new ChartAdapter(getContext(), expenseResultList);
                             lv_BarChart.setAdapter(ca);
-                            ca.notifyDataSetChanged();
+                            //ca.notifyDataSetChanged();
 
                         } else {
                             Toast.makeText(getContext(), "Không có dữ liệu.", Toast.LENGTH_SHORT).show();

@@ -138,4 +138,8 @@ public class GroupMemberActivity extends AppCompatActivity {
         });
 
     }
+
+    public void clickToDeleteGroup(View view) {
+        
+    }
 }

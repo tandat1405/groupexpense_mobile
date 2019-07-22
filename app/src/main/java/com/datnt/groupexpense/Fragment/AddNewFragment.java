@@ -80,6 +80,9 @@ public class AddNewFragment extends Fragment {
 
                 try{
                     quantity = Integer.parseInt(edt_Quantity.getText().toString());
+                    if(quantity<1){
+                        Toast.makeText(getContext(), "Số tiền chi tiêu phải lớn hơn 0.", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 catch (Exception e){
                     Toast.makeText(getContext(), "Vui lòng nhập số tiền chi tiêu.", Toast.LENGTH_SHORT).show();

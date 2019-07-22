@@ -65,12 +65,14 @@ public class ChartAdapter extends BaseAdapter {
 
         ExpenseResult expenseResult = this.listData.get(position);
         holder.ownerName.setText(expenseResult.getUsername());
+
         Cartesian cartesian = AnyChart.column();
         List<DataEntry> data = new ArrayList<>();
         for(int j=0;j<expenseResult.getExpenseResponses().size();j++){
             data.add(new ValueDataEntry(expenseResult.getExpenseResponses().get(j).getName(), expenseResult.getExpenseResponses().get(j).getQuantity()));
         }
         Column column = cartesian.column(data);
+
         column.tooltip()
                 .titleFormat("{%X}")
                 .position(Position.CENTER_BOTTOM)
@@ -79,13 +81,16 @@ public class ChartAdapter extends BaseAdapter {
                 .offsetY(5d)
                 .format("${%Value}{groupsSeparator: }");
         cartesian.animation(true);
-        cartesian.yScale().minimum(5d);
+        cartesian.yScale().minimum(0d);
         cartesian.yAxis(0).labels().format("${%Value}{groupsSeparator: }");
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
         cartesian.interactivity().hoverMode(HoverMode.BY_X);
         cartesian.xAxis(0).title("Expense");
         cartesian.yAxis(0).title("VNĐ");
+        cartesian.xScroller(true);
+        cartesian.xZoom(true);
         holder.anyChartView.setChart(cartesian);
+
         return convertView;
     }
 
