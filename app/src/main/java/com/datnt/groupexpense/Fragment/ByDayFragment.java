@@ -159,9 +159,7 @@ public class ByDayFragment extends Fragment {
         expenseResultList.add(expenseResult);
         expenseResultList.add(expenseResult1);
 
-        ChartAdapter ca = new ChartAdapter(getContext(), expenseResultList);
-        lv_BarChart.setAdapter(ca);
-        ca.notifyDataSetChanged();
+
 
     }
 
@@ -178,6 +176,8 @@ public class ByDayFragment extends Fragment {
                 if (response.isSuccessful()) {
                     expenseResultList = response.body();
                     ChartAdapter ca = new ChartAdapter(getContext(), expenseResultList);
+                    lv_BarChart.setAdapter(ca);
+                    ca.notifyDataSetChanged();
                 } else {
                     Toast.makeText(getContext(), "Không có dữ liệu.", Toast.LENGTH_SHORT).show();
                 }

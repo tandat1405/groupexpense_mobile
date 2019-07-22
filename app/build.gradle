@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.datnt.groupexpense"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -40,5 +40,5 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.2.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.2.0'
     //
-    implementation 'me.ithebk:barchart:0.9'
+    implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
 }

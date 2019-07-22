@@ -41,6 +41,7 @@ public class AddNewFragment extends Fragment {
     private Spinner spn_ExpenseType;
     private String[] expenseTypeArr;
     int groupId, userId;
+    int quantity;
     GroupClient groupClient = ApiUtil.groupClient();
     UserExpenseClient userExpenseClient = ApiUtil.userExpenseClient();
     @Nullable
@@ -76,7 +77,14 @@ public class AddNewFragment extends Fragment {
         btn_AddExpense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int quantity = Integer.parseInt(edt_Quantity.getText().toString());
+
+                try{
+                    quantity = Integer.parseInt(edt_Quantity.getText().toString());
+                }
+                catch (Exception e){
+                    Toast.makeText(getContext(), "Vui lòng nhập số tiền chi tiêu.", Toast.LENGTH_SHORT).show();
+                }
+
                 Call<ResponseBody> call = userExpenseClient.createNewExpense(groupId, userId, categoryId, quantity);
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override

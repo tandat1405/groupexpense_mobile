@@ -8,14 +8,21 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.anychart.AnyChart;
+import com.anychart.AnyChartView;
+import com.anychart.chart.common.dataentry.DataEntry;
+import com.anychart.chart.common.dataentry.ValueDataEntry;
+import com.anychart.charts.Cartesian;
+import com.anychart.core.cartesian.series.Column;
+import com.anychart.enums.Anchor;
+import com.anychart.enums.HoverMode;
+import com.anychart.enums.Position;
+import com.anychart.enums.TooltipPositionMode;
 import com.datnt.groupexpense.ModelRetrofit.ExpenseResult;
 import com.datnt.groupexpense.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import me.ithebk.barchart.BarChart;
-import me.ithebk.barchart.BarChartModel;
 
 public class ChartAdapter extends BaseAdapter {
     private List<ExpenseResult> listData;
@@ -50,7 +57,7 @@ public class ChartAdapter extends BaseAdapter {
             convertView = layoutInflater.inflate(R.layout.list_item_chart_view, null);
             holder = new ViewHolder();
             holder.ownerName = convertView.findViewById(R.id.tv_chart_owner);
-            holder.chart = convertView.findViewById(R.id.bar_chart);
+            holder.anyChartView = convertView.findViewById(R.id.any_chart);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -58,30 +65,32 @@ public class ChartAdapter extends BaseAdapter {
 
         ExpenseResult expenseResult = this.listData.get(position);
         holder.ownerName.setText(expenseResult.getUsername());
-        int tempMaxExpense = 0;
-        for (int i = 1; i < expenseResult.getExpenseResponses().size(); i++) {
-            if (tempMaxExpense < expenseResult.getExpenseResponses().get(i).getQuantity()) {
-                tempMaxExpense = expenseResult.getExpenseResponses().get(i).getQuantity();
-            }
+        Cartesian cartesian = AnyChart.column();
+        List<DataEntry> data = new ArrayList<>();
+        for(int j=0;j<expenseResult.getExpenseResponses().size();j++){
+            data.add(new ValueDataEntry(expenseResult.getExpenseResponses().get(j).getName(), expenseResult.getExpenseResponses().get(j).getQuantity()));
         }
-        holder.chart.setBarMaxValue(tempMaxExpense);
-        List<BarChartModel> barChartModelList = new ArrayList<>();
-        for (int i = 0; i < expenseResult.getExpenseResponses().size(); i++) {
-            BarChartModel barChartModel = new BarChartModel();
-            barChartModel.setBarValue(expenseResult.getExpenseResponses().get(i).getQuantity());
-            barChartModel.setBarColor(Color.parseColor("#2bb0fc"));
-            barChartModel.setBarTag(null);
-            barChartModel.setBarText(expenseResult.getExpenseResponses().get(i).getName() + "\n"
-                    + expenseResult.getExpenseResponses().get(i).getQuantity());
-            barChartModelList.add(barChartModel);
-        }
-        holder.chart.addBar(barChartModelList);
-        System.out.println(expenseResult.getExpenseResponses().size() + "----------------------------------");
+        Column column = cartesian.column(data);
+        column.tooltip()
+                .titleFormat("{%X}")
+                .position(Position.CENTER_BOTTOM)
+                .anchor(Anchor.CENTER_BOTTOM)
+                .offsetX(0d)
+                .offsetY(5d)
+                .format("${%Value}{groupsSeparator: }");
+        cartesian.animation(true);
+        cartesian.yScale().minimum(5d);
+        cartesian.yAxis(0).labels().format("${%Value}{groupsSeparator: }");
+        cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
+        cartesian.interactivity().hoverMode(HoverMode.BY_X);
+        cartesian.xAxis(0).title("Expense");
+        cartesian.yAxis(0).title("VNĐ");
+        holder.anyChartView.setChart(cartesian);
         return convertView;
     }
 
     static class ViewHolder {
         TextView ownerName;
-        BarChart chart;
+        AnyChartView anyChartView;
     }
 }
