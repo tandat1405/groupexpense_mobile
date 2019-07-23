@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                         public void onFailure(Call<ResponseBody> call, Throwable t) {
 
                             pw.dismiss();
-                            Toast.makeText(MainActivity.this, "Không thể kết nối đến máy chủ.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Tạo tài khoản thất bại.", Toast.LENGTH_SHORT).show();
                         }
                     });
 
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<LoginResult> call, Throwable t) {
-                createAlertDialog("Không thể kết nối tới server.");
+                createAlertDialog("Sai tên đăng nhập hoặc mật khẩu.");
             }
         });
 

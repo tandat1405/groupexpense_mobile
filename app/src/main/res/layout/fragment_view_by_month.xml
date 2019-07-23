@@ -32,7 +32,7 @@
     <ListView
         android:id="@+id/lv_bar_chart_month"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
     </ListView>
 

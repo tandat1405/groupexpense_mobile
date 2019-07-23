@@ -94,6 +94,8 @@ public class ExpenseActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 SharedPreferences.Editor editor = getSharedPreferences("Expense", MODE_PRIVATE).edit();
                 editor.putInt("groupId", groupResultList.get(position).getIdGroup());
+                editor.putString("groupName", groupResultList.get(position).getNameGroup());
+                editor.putInt("onwerId", groupResultList.get(position).getOwnerGroupResult().getId());
                 editor.apply();
                 Intent intent = new Intent(ExpenseActivity.this, ExpandManagementAcitivity.class);
                 intent.putExtra("groupName",groupResultList.get(position).getNameGroup());
@@ -158,5 +160,10 @@ public class ExpenseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         getGroupList();
+    }
+
+    @Override
+    public void onBackPressed() {
+        return;
     }
 }

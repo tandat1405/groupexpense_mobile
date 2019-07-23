@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -38,8 +39,10 @@ public class GroupMemberActivity extends AppCompatActivity {
     RelativeLayout rl_viewInvitation;
     ListView lv_listMember;
     List<GroupMember> groupMemberList;
-    private EditText edt_MemberName;
-    int groupId, userId;
+    private EditText edt_MemberName, edt_GroupName;
+    int groupId, userId, ownerId;
+    LinearLayout ll_AdminView;
+    String groupName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,12 +81,26 @@ public class GroupMemberActivity extends AppCompatActivity {
         //end action bar
         edt_MemberName = findViewById(R.id.edt_member_name);
         lv_listMember = findViewById(R.id.lv_group_member);
+        ll_AdminView = findViewById(R.id.ll_admin_view);
+        edt_GroupName = findViewById(R.id.edt_group_name);
 
         //pref
         SharedPreferences prefs = getSharedPreferences("Expense", Context.MODE_PRIVATE);
         groupId = prefs.getInt("groupId", 0);
         userId = prefs.getInt("UserId",0);
+        groupName = prefs.getString("groupName", "");
+        ownerId = prefs.getInt("onwerId",0);
+
+
+        edt_GroupName.setText(groupName);
+
         getMemberInGroup();
+        if(ownerId == userId){
+            ll_AdminView.setVisibility(View.VISIBLE);
+        }
+        else {
+            ll_AdminView.setVisibility(View.GONE);
+        }
 
         //GroupMemberAdapter adapter = new GroupMemberAdapter(this,groupMemberList);
         //lv_listMember.setAdapter(adapter);
@@ -138,8 +155,57 @@ public class GroupMemberActivity extends AppCompatActivity {
         });
 
     }
-
+    GroupClient groupClient = ApiUtil.groupClient();
     public void clickToDeleteGroup(View view) {
-        
+        Call<ResponseBody> call = groupClient.deleteGroup(groupId);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(GroupMemberActivity.this, "Xóa nhóm thành công.", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(GroupMemberActivity.this, ExpenseActivity.class));
+                }
+                else {
+                    Toast.makeText(GroupMemberActivity.this, "Xóa nhóm thất bại.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(GroupMemberActivity.this, "Không thể kết nối server.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
+    public void clickToEditGroupName(View view) {
+        String name = edt_GroupName.getText().toString();
+        if(name.equals(groupName)){
+            Toast.makeText(this, "Xin lựa chọn tên mới.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(name.length()<1){
+            Toast.makeText(this, "Tên nhóm không được để trống.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Call<ResponseBody> call = groupClient.updateGroupName(groupId,name);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(GroupMemberActivity.this, "Đổi tên nhóm thành công.", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(GroupMemberActivity.this, ExpenseActivity.class));
+                }
+                else {
+                    Toast.makeText(GroupMemberActivity.this, "Đổi tên nhóm thất bại.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(GroupMemberActivity.this, "Không thể kết nối tới server.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

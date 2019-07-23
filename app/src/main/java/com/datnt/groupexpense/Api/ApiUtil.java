@@ -5,6 +5,7 @@ public class ApiUtil {
     public static String BASE_URL = "http://capstone.ppls.cf:9000";
     //public static String BASE_URL = "http://192.168.1.35:8080";
     //public static String BASE_URL = "http://192.168.2.84:8080";
+    //public static String BASE_URL = "http://192.168.43.65:8080";
     public static UserClient userClient() {
         return RetrofitClient.getClient(BASE_URL).create(UserClient.class);
     }
